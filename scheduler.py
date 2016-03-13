@@ -21,3 +21,4 @@ class Scheduler(object):
         Get URLS from redis
         """
         return "https://www.github.com"
+        
