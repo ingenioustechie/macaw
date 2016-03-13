@@ -1,0 +1,4 @@
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 301 0
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 None
