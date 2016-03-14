@@ -5,7 +5,9 @@ from utils import log, MAX_DEPTH, URLS_CRAWLLING, redis
 import base64
 
 class Spider(object):
-    """docstring for Spider"""
+    """
+    Gets the data from internet and sends to parser   
+    """
     def __init__(self):
         super(Spider, self).__init__()
         self.crawl_depth_counter = 0
@@ -16,8 +18,8 @@ class Spider(object):
         """
         if (self._is_url(url) and 
             page_depth <= MAX_DEPTH and 
-            not self._is_crawlled(url)):
-        
+            not self._is_crawled(url)):
+
             try:
                 redis.hset(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')), "")
 
@@ -55,7 +57,7 @@ class Spider(object):
         url_path = urlparse(url)
         return url_path[0]+'://'+url_path[1]
 
-    def _is_crawlled(self, url):
+    def _is_crawled(self, url):
         """
         Checks if url is cralling or not.
         """

@@ -3,7 +3,7 @@ from utils import redis, DOMAINS, DOMAINS_WAIT, DOMAINS_DONE
 
 class Scheduler(object):
     """
-    Scheduler
+    Gets  the root url from redis and sends them to spider for crawling
     """
     def __init__(self):
         super(Scheduler, self).__init__()

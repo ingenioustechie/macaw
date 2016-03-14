@@ -8,7 +8,10 @@ from tld import get_tld
 
 
 class Parser(object):
-    """docstring for Parser"""
+    """
+    Gets the HTML and parses the links and stores them.  
+
+    """
     def __init__(self, url):
         super(Parser, self).__init__()
         self.base_url = url

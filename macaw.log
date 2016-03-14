@@ -1,0 +1,20 @@
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 301 0
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 None
+DEBUG:root:Page Depth 0 URL https://www.github.com Total count  27
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.google.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 302 262
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.google.co.in
+DEBUG:requests.packages.urllib3.connectionpool:"GET /?gfe_rd=cr&ei=x9LmVqrbBuOK8Qfr7rOwCA HTTP/1.1" 200 None
+DEBUG:root:Page Depth 0 URL https://www.google.com Total count  31
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 301 0
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): github.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 200 None
+DEBUG:root:Page Depth 0 URL https://www.github.com Total count  27
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.google.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET / HTTP/1.1" 302 262
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): www.google.co.in
+DEBUG:requests.packages.urllib3.connectionpool:"GET /?gfe_rd=cr&ei=FNXmVt7sGqTT8ge1lZKQAQ HTTP/1.1" 200 None
+DEBUG:root:Page Depth 0 URL https://www.google.com Total count  31
