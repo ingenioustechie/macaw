@@ -1,6 +1,11 @@
-from utils import redis
+from utils import redis, ONLY_ROOTDOMAIN
 import lxml.html as lxl
-import urlparse
+from  urllib.parse import urlparse
+from tld import get_tld
+
+# from tld.utils import update_tld_names
+# update_tld_names()
+
 
 class Parser(object):
     """docstring for Parser"""
@@ -21,14 +26,19 @@ class Parser(object):
         urls = set([])
         for a in tree.xpath('//a'):
 
-            if not a.get('href', "").startswith("http"):
-                link = self.base_url+a.get('href')
+            # continue if href starts with # as its anchor linking
+            if (a.get('href', "").startswith("#")
+                or a.get('href', "").lower().startswith("mailto")):
+                continue
+            
+            if (not a.get('href', "").startswith("http")):
+                link = self.base_url+a.get('href', "")
             else:
                 link = a.get('href')
             
             # if it not valid link don't do anything
             if self._is_valid_link(link):
-                urls.add(a.get('href')) 
+                urls.add(link) 
 
         return True, urls
 
@@ -39,11 +49,20 @@ class Parser(object):
         but it avoids a call to server. 
         """
 
+        # Check ONLY_ROOTDOMAIN
+
+        scheme, netloc, path, params, query, fragment = urlparse(link)
+
+        if get_tld(self.base_url) == get_tld(link) and not ONLY_ROOTDOMAIN:
+        # if get_tld(self.base_url) == get_tld(link):
+            return False
+
         # Need to add more
         DOC_EXT = [".pdf", ".xmls", ".docx", ".odt"]
 
-         try:
-            urlPath = [i for i in (urlparse.urlparse(link)[2].split('/')) if i]
+        try:
+
+            urlPath = [i for i in (path.split('/')) if i]
 
             file_name = urlPath[-1]
             ext = file_name.split(".")[-1]

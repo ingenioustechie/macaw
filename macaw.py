@@ -6,6 +6,6 @@ urls to be Crawlled from DB
 from scheduler import Scheduler
 
 
-schedule = Scheduler()
+scheduler = Scheduler()
 
-schedule.crawl()
+scheduler.crawl()

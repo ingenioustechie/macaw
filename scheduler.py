@@ -12,13 +12,10 @@ class Scheduler(object):
         Crawls the url and returns all the respective urls in dict
         """
         url = self._get_url()
-        links = Spider().get_links(url)
-
-        return links
+        Spider().get_links(url)
 
     def _get_url(self):
         """
         Get URLS from redis
         """
         return "https://www.github.com"
-        
