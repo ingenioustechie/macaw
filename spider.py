@@ -1,7 +1,8 @@
 from parser import Parser
 from  urllib.parse import urlparse
 import requests
-from utils import log, MAX_DEPTH
+from utils import log, MAX_DEPTH, URLS_CRAWLLING, redis
+import base64
 
 class Spider(object):
     """docstring for Spider"""
@@ -13,15 +14,22 @@ class Spider(object):
         """
         Get the links from url
         """
-        if self._is_url(url) and page_depth <= MAX_DEPTH:
+        if (self._is_url(url) and 
+            page_depth <= MAX_DEPTH and 
+            not self._is_crawlled(url)):
             try:
+                redis.hset(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')), "")
+
                 response = requests.get(url)
 
                 if (response.status_code//100 == 2 and
                     self._is_html(response)):
+
+                    redis.hset(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')), response.content)
+                    
                     status, links = Parser(self._base_url(url)).parse_href(response.content)
 
-                    print(page_depth, status, links)
+                    log.debug("Page Depth {0} URL {2} Total count  {1}".format(page_depth, len(links), url))
                     for link in links:
                         self.get_links(link, page_depth+1)
 
@@ -45,3 +53,10 @@ class Spider(object):
     def _base_url(self, url):
         url_path = urlparse(url)
         return url_path[0]+'://'+url_path[1]
+
+    def _is_crawlled(self, url):
+        """
+        Checks if url is cralling or not.
+        """
+        print("Redis return ", redis.hget(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8'))))
+        return redis.hget(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')))

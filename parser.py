@@ -1,4 +1,4 @@
-from utils import redis, ONLY_ROOTDOMAIN
+from utils import redis, ONLY_ROOTDOMAIN, log
 import lxml.html as lxl
 from  urllib.parse import urlparse
 from tld import get_tld
@@ -53,9 +53,13 @@ class Parser(object):
 
         scheme, netloc, path, params, query, fragment = urlparse(link)
 
-        if get_tld(self.base_url) == get_tld(link) and not ONLY_ROOTDOMAIN:
-        # if get_tld(self.base_url) == get_tld(link):
-            return False
+        try:
+            if get_tld(self.base_url) == get_tld(link) and not ONLY_ROOTDOMAIN:
+            # if get_tld(self.base_url) == get_tld(link):
+                return False
+        except Exception as e:
+            log.error(str(e), self.base_url, link)
+
 
         # Need to add more
         DOC_EXT = [".pdf", ".xmls", ".docx", ".odt"]

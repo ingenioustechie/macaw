@@ -1,4 +1,5 @@
 from spider import Spider
+from utils import redis, DOMAINS, DOMAINS_WAIT, DOMAINS_DONE
 
 class Scheduler(object):
     """
@@ -11,11 +12,24 @@ class Scheduler(object):
         """
         Crawls the url and returns all the respective urls in dict
         """
-        url = self._get_url()
-        Spider().get_links(url)
+
+        while redis.lrange(DOMAINS, 0,1):
+            url = self._get_url()
+            if url:
+                Spider().get_links(url)
+            else:
+                print("No domains to crawl", "Seed the domains in redis")
+
+            self._clearWaiting(url)
 
     def _get_url(self):
         """
         Get URLS from redis
         """
-        return "https://www.github.com"
+        domain = redis.brpoplpush(DOMAINS, DOMAINS_WAIT)
+
+        return domain.decode("utf-8") if domain else False
+
+    def _clearWaiting(self, url):
+        """ Clears waiting """        
+        redis.lrem(DOMAINS_WAIT, -1, url)
