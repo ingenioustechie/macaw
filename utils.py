@@ -2,7 +2,8 @@ import logging
 import redis
 
 logging.getLogger('')
-logging.basicConfig(filename='macaw.log',level=logging.DEBUG, filemode="w")
+logging.basicConfig(filename='macaw.log',level=logging.DEBUG)
+logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 
 log = logging 
 

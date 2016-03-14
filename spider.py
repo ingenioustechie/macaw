@@ -17,6 +17,7 @@ class Spider(object):
         if (self._is_url(url) and 
             page_depth <= MAX_DEPTH and 
             not self._is_crawlled(url)):
+        
             try:
                 redis.hset(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')), "")
 
@@ -26,7 +27,7 @@ class Spider(object):
                     self._is_html(response)):
 
                     redis.hset(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')), response.content)
-                    
+
                     status, links = Parser(self._base_url(url)).parse_href(response.content)
 
                     log.debug("Page Depth {0} URL {2} Total count  {1}".format(page_depth, len(links), url))
@@ -58,5 +59,4 @@ class Spider(object):
         """
         Checks if url is cralling or not.
         """
-        print("Redis return ", redis.hget(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8'))))
         return redis.hget(URLS_CRAWLLING, base64.b64encode(url.encode('UTF-8')))

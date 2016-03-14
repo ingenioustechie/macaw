@@ -1,6 +1,5 @@
 import unittest
-from utils import redis, DOMAINS, DOMAINS_WAIT, DOMAINS_DONE
-
+from utils import *
 class TestCrawlMethods(unittest.TestCase):
 
     def test_domain(self):
@@ -8,8 +7,21 @@ class TestCrawlMethods(unittest.TestCase):
 
 
 def populate_domain():
-    d = ["https://www.github.com"]
+    """
+    Added to test crawlling 
+    """
+
+    redis.delete(DOMAINS)
+    redis.delete(DOMAINS_WAIT)
+    redis.delete(DOMAINS_DONE)
+    redis.delete(URLS)
+    redis.delete(URLS_WAIT)
+    redis.delete(URLS_DONE)
+    redis.delete(URLS_CRAWLLING)
+
+    d = ["https://www.github.com", "https://www.google.com"]
     redis.lpush(DOMAINS, *d)
+
 
 if __name__ == '__main__':
     populate_domain()

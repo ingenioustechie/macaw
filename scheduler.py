@@ -13,8 +13,9 @@ class Scheduler(object):
         Crawls the url and returns all the respective urls in dict
         """
 
-        while redis.lrange(DOMAINS, 0,1):
+        while redis.lrange(DOMAINS, 0,0):
             url = self._get_url()
+            print(url)
             if url:
                 Spider().get_links(url)
             else:
